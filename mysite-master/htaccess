@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www.ulu.one
+RewriteRule (.*) http://ulu.one/$1 [R=301,L]
