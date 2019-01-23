@@ -17,26 +17,27 @@ class EmpUpdateView(UpdateView):
     #fields = ['first_name']
     template_name = 'personal/employee_update_form.html'
     #queryset=Employee.objects.all()
-    success_url = '/page1/'
+    success_url = '/'
     def get_object(self):
         id_=self.kwargs.get("id")
         return get_object_or_404(Employee,id=id_)
-class ContactView(FormView):
+class CreateView(FormView):
     template_name = 'personal/create.html'
     form_class = PostForm
-    success_url = '/page1/'
+    success_url = '/'
     def form_valid(self, form):
-        first_name = form.cleaned_data['first_name']
+        fname = form.cleaned_data['first_name']
         last_name = form.cleaned_data['last_name']
         mail = form.cleaned_data['mail']
         phonenumber = form.cleaned_data['phonenumber']
-        Employee(first_name=first_name,last_name=last_name,mail=mail,phonenumber=phonenumber).save()
+        emp=Employee(first_name=fname,last_name=last_name,mail=mail,phonenumber=phonenumber)
+        emp.save()
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         #form.send_email()
         #return super().form_valid(form)
-        return super(ContactView, self).form_valid(form)
-class ArticleListView(ListView):
+        return super(CreateView, self).form_valid(form)
+class EmployeeListView(ListView):
     model = Employee
     #paginate_by = 100  # if pagination is desired
     def get_context_data(self, **kwargs):
@@ -60,7 +61,8 @@ def post_new(request):
     last_name=request.POST.get('last_name')
     email = request.POST.get('email')
     phonenumber=request.POST.get('phonenumber')
-    Employee(first_name=first_name,last_name=last_name,mail=email,phonenumber=phonenumber).save()
+    emp=Employee(first_name=first_name,last_name=last_name,mail=email,phonenumber=phonenumber)
+    emp.save()
     return render(request,'page2.html')
     #HttpResponseRedirect('/page1/')
     #if request.method == "POST":
