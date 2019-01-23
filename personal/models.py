@@ -13,4 +13,4 @@ class Customer(models.Model):
     mail = models.CharField(max_length = 50)
     phonenumber = models.IntegerField()
     class Meta:
-        db_table = "custom"
+        db_table = "customer"
